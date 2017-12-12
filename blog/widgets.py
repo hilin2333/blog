@@ -97,7 +97,7 @@ a.deletelink{
                     false);
 
                 xhr.setRequestHeader("Cache-Control", "no-cache");
-                xhr.setRequestHeader('X-CSRFToken', $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader('X-CSRFToken', $('meta[name="csrf-token"]').attr('content')||$('input[name="csrfmiddlewaretoken"]').val());
                 xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
                 var fd = new FormData();
