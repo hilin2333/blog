@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.text import slugify
 from django.views.generic import DetailView, ListView, TemplateView
 from markdown.extensions.toc import TocExtension
-
+from .archives import PostArchiveMixin
 from blog.models import Category, Post,Tag
 from blog.views.mixins.view_mixins import PaginationMixin
 
@@ -179,7 +179,7 @@ class CategoryListView(SetHeadlineMixin, ListView):
     ).annotate(num_posts=Count('post'))
 
 
-class PostArchivesView(SetHeadlineMixin, ListView):
+class PostArchivesView(SetHeadlineMixin,PostArchiveMixin, ListView):
     headline = '归档'
     model = Post
     template_name = 'blog/archives.html'
