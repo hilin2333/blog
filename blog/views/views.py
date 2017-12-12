@@ -120,12 +120,12 @@ class PostDetailView(SetHeadlineMixin, DetailView):
         post = self.object
 
         try:
-            previous_post = post.get_previous_by_created_time()
+            previous_post = Post.objects.filter(status=1,created_time__gt=post.created_time).order_by("created_time").first()
         except Post.DoesNotExist:
             previous_post = None
 
         try:
-            next_post = post.get_next_by_created_time()
+            next_post = Post.objects.filter(status=1,created_time__lt=post.created_time).order_by("created_time").first()
         except Post.DoesNotExist:
             next_post = None
 
