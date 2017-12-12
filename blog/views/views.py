@@ -17,7 +17,7 @@ class BasePostListView(PaginationMixin, SelectRelatedMixin, SetHeadlineMixin, Li
     select_related = ('author', 'category')
 
     def get_queryset(self):
-        return super().get_queryset().annotate(comment_count=Count('comments'))
+        return super().get_queryset().filter(status=1).annotate(comment_count=Count('comments'))
 
 
 class IndexView(BasePostListView):
