@@ -1,0 +1,6 @@
+{% extends 'blog/index.html' %}
+
+
+{% if tag %}
+    {% block description %}{{ tag.name }}{% endblock description %}
+{% endif %}

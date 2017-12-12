@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="unit-3-4 unit-1-on-mobile top-gap">
+        <div class="bg-white card px-7 py-5">
+            <h2>归档</h2>
+            <ul>
+              {% for date in date_list %}
+              <li>
+                <a href="{% url 'blog:post_archive_month' date|date:"Y" date|date:"m" %}" rel="archives">{{ date|date:"YEAR_MONTH_FORMAT" }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+
+            {% if previous_year %}
+            <h3>上一年</h3>
+            <p>
+              <a href="{% url 'blog:post_archive_year' previous_year|date:"Y" %}" rel="archives">{{ previous_year|date:"Y" }}</a>
+            </p>
+            {% endif %}
+            {% if next_year %}
+            <h3>下一年</h3>
+            <p>
+              <a href="{% url 'blog:post_archive_year' next_year|date:"Y" %}" rel="archives">{{ next_year|date:"Y" }}</a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

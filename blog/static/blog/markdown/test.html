@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.staticfile.org/font-awesome/4.3.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/semantic-ui/2.2.13/components/icon.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="gitee.markdown.css" rel="stylesheet">
+    <link href="gitee.editor.css" rel="stylesheet">
+    <link href="gitee.comment.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
+    <script src="gitee.editor.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.fn.markdown.messages.zh = {
+                'Bold': "粗体",
+                'Italic': "斜体",
+                'Heading': "标题",
+                'URL/Link': "链接",
+                'Image': "图片",
+                'List': "列表",
+                'Unordered List': "无序列表",
+                'Ordered List': "有序列表",
+                'Code': "代码",
+                'Quote': "引用",
+                'Preview': "预览",
+                'strong text': "粗体",
+                'emphasized text': "强调",
+                'heading text': "标题",
+                'enter link description here': "输入链接说明",
+                'Insert Hyperlink': "URL地址",
+                'enter image description here': "输入图片说明",
+                'Insert Image Hyperlink': "图片URL地址",
+                'enter image title here': "在这里输入图片标题",
+                'list text here': "这里是列表文本",
+                'code text here': "这里输入代码",
+                'quote here': "这里输入引用文本",
+                'ImageTip':"本地图片仅支持JPG、GIF、PNG格式,并且文件小于512Kb(1kb=1024字节).网络图片地址以http://、https://或ftp://格式开头",
+                'ImageInputTip':'请填入网络图片地址或点击按钮上传本地图片到服务器.',
+                'Progress':'上传进度',
+                'Insert':'插入',
+                'Cancle':'取消'
+            };
+        }(jQuery));
+        $(function () {
+            var $editor = $("#editoredit1652");
+            $editor.markdown({
+                language: 'zh',
+                imgurl: "/upload",
+                base64url: "/upload_with_base_64",
+            });
+
+            //var $loader = $editor.parents().eq(3).find('.small.loader');
+            //$editor.val($("#hidden-contentedit1652").val());
+            $editor.on("drop", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var fileList = e.originalEvent.dataTransfer.files;
+                if (fileList.length == 0) {
+                    return;
+                }
+                if (fileList[0].type.indexOf('text') != -1) {
+                    if (fileList[0].size > 1024 * 100) {
+                        alert("文本文件不能超过100k");
+                        return;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var contents = e.target.result;
+                        var old_content = $editor.val();
+                        $editor.val(old_content + contents);
+                        var b = jQuery.Event('keyup', {
+                            which: 39
+                        });
+                        $editor.trigger(b);
+                    }
+                    reader.readAsText(fileList[0]);
+                    return;
+                }
+
+                if (fileList[0].type.indexOf('image') === -1) {
+                    alert("无法上传非图片");
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $loader.show();
+                }
+                reader.readAsDataURL(fileList[0]);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("post", "/upload", true);
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.upload.addEventListener("progress",
+                    function (e) {
+                        if (e.lengthComputable) {
+                            var loaded = Math.ceil((e.loaded / e.total) * 100);
+                        }
+                    },
+                    false);
+
+                xhr.addEventListener("load",
+                    function (e) {
+                        $loader.hide();
+
+                        var i = $.parseJSON(e.target.response);
+                        var val = $editor.val();
+                        val += '![输入图片说明](' + i.files[0].url + ' "在这里输入图片标题")';
+                        $editor.val(val);
+                        var b = jQuery.Event('keyup', {
+                            which: 39
+                        });
+                        $editor.trigger(b);
+                    },
+                    false);
+
+                xhr.setRequestHeader("Cache-Control", "no-cache");
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+                var fd = new FormData();
+                fd.append('files', fileList[0]);
+                xhr.send(fd);
+            });
+        })
+
+
+        /*$('form').submit(function (e) {
+            var $this = $(this);
+            var $target = $(e.target);
+            var formFor = $this.data('for');
+
+            if ($target.attr('id') == 'projects-search-form') {
+                return true;
+            }
+            if ($target.hasClass('project-refs-form')) {
+                return true;
+            }
+            if ($target.hasClass('edit_pull_request')) {
+                var o = $('#loadding-state').clone();
+                o.show();
+                o.attr('id', 'loadding-l');
+                $('#git-comment-divider').before(o);
+                return true;
+            }
+            $("#hidden-contentedit1652").val($editor.val());
+            // Issue、PR 和 Release 的表单不在此处做处理
+            if (['issue', 'pull request', 'release'].indexOf(formFor) >= 0) {
+                return true;
+            }
+            if ($.trim($this.find(".md-input").val()).length == 0) {
+                $("#hidden-contentedit1652").val('');
+                alert("内容不能为空");
+                return false;
+            }
+            var loading = $this.parent().parent().prev().prev().find("#loadding-state");
+            loading.addClass("active").removeClass("disabled");
+
+            if (!$this.parent().hasClass('new_note')) {
+                $this.find('.md-input').prop('disabled', true);
+            }
+
+            var $btnComment = $this.find('.js-comment-button');
+            $btnComment.prop('disabled', true).addClass('disabled');
+            $this.find('.js-commit-button').prop('disabled', true).addClass('disabled');
+            switch ($btnComment.val()) {
+                case '评论':
+                case 'Comment':
+                    var count = $.trim($('#total_count').text());
+                    $('#total_count').text(parseInt(count) + 1);
+                    break;
+                case '更新':
+                case 'Update':
+                    if ($this.find('.md-input').val().length == 0) {
+                        alert('内容不能为空');
+                    }
+                default:
+                    break;
+            }
+        });*/
+        /*$(document).ready(function () {
+            if ($('.default-template').val() == 1) {
+                var templateCookies = $.cookie("edit");
+                var checkboxSwitch = null;
+                var templateId = "edit";
+                var $mdEditor = $("#editoredit1652").data('markdown');
+                var tempContent = $mdEditor.getContent();
+
+                if (templateCookies == null) {
+                    //cookies无数据
+                    checkboxSwitch = 'check';
+                    $.cookie(templateId, '1', {expires: 365, path: '/'});
+                } else if (templateCookies == 1) {
+                    checkboxSwitch = 'check';
+                } else if (templateCookies == 0) {
+                    checkboxSwitch = 'uncheck';
+                    $mdEditor.setContent('');
+                }
+
+                $('.open-template .checkbox')
+                    .checkbox(checkboxSwitch)
+                    .checkbox({
+                        onUnchecked: function () {
+                            if (tempContent == $mdEditor.getContent()) {
+                                //内容与模板相同则清空输入
+                                $mdEditor.setContent('');
+                            }
+                            $.cookie(templateId, '0', {expires: 365, path: '/'});
+                        },
+                        onChecked: function () {
+                            var currentContent = $mdEditor.getContent();
+                            $mdEditor.setContent(currentContent + tempContent);
+                            $.cookie(templateId, '1', {expires: 365, path: '/'});
+                        }
+                    });
+            }
+        });*/
+
+    </script>
+</head>
+<body>
+<form>
+    <textarea id='editoredit1652' name="content" style='color: rgb(0, 0, 0);
+    max-height: 100%;
+    resize: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    height: 110px;background: #fff;border:0;'></textarea>
+    <div class="note-actions clearfix">
+    <input class="ui orange button js-comment-button disabled" id="update-comment" name="commit" type="submit" value="Comment" disabled="">
+
+    <div class="ui basic button js-close-discussion-note-form" style="display: none;">Cancel</div>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<h4>Markdown语法教程 (Markdown syntax tutorial)</h4>
+
+<table class="markdown-reference">
+  <thead>
+    <tr>
+      <th>用法1</th>
+      <th class="second-example">用法2</th>
+      <th>结果</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="preformatted">*Italic*</td>
+      <td class="preformatted second-example">_Italic_</td>
+      <td><em>Italic</em></td>
+    </tr>
+    <tr>
+      <td class="preformatted">**Bold**</td>
+      <td class="preformatted second-example">__Bold__</td>
+      <td><strong>Bold</strong></td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        # Heading 1
+      </td>
+      <td class="preformatted second-example">
+        Heading 1<br> =========
+      </td>
+      <td>
+        <h1 class="smaller-h1">Heading 1</h1>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        ## Heading 2
+      </td>
+      <td class="preformatted second-example">
+        Heading 2<br> ---------
+      </td>
+      <td>
+        <h2 class="smaller-h2">Heading 2</h2>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        [Link](http://a.com)
+      </td>
+      <td class="preformatted second-example">
+        [Link][1]<br> ⋮
+        <br> [1]: http://b.org
+      </td>
+      <td><a href="http://commonmark.org/">Link</a></td>
+    </tr>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        &gt; Blockquote
+      </td>
+      <td class="preformatted second-example">
+        &nbsp;
+      </td>
+      <td>
+        <blockquote>
+          <p>Blockquote</p>
+        </blockquote>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        <p>
+          * List<br> * List<br> * List
+        </p>
+      </td>
+      <td class="preformatted second-example">
+        <p>
+          - List<br> - List<br> - List<br>
+        </p>
+      </td>
+      <td>
+        <ul>
+          <li>List</li>
+          <li>List</li>
+          <li>List</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        <p>
+          1. One<br> 2. Two<br> 3. Three
+        </p>
+      </td>
+      <td class="preformatted second-example">
+        <p>
+          1) One<br> 2) Two<br> 3) Three
+        </p>
+      </td>
+      <td>
+        <ol>
+          <li>One</li>
+          <li>Two</li>
+          <li>Three</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        Horizontal Rule<br>
+        <br> ---
+      </td>
+      <td class="preformatted second-example">
+        Horizontal Rule<br>
+        <br> ***
+      </td>
+      <td>
+        <h2 id="horizontal-rule-">Horizontal Rule </h2>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        ```<br> # code block<br> print '3 backticks or'<br> print 'indent 4 spaces'<br> ```
+      </td>
+      <td class="preformatted second-example">
+        <span class="spaces">····</span># code block<br>
+        <span class="spaces">····</span>print '3 backticks or'<br>
+        <span class="spaces">····</span>print 'indent 4 spaces'
+      </td>
+      <td>
+        <pre><code class="hljs"><span class="hljs-comment"># code block </span>
+<span class="hljs-built_in">print</span> <span class="hljs-string">'3 backticks or'</span> 
+<span class="hljs-built_in">print</span> <span class="hljs-string">'indent 4 spaces'</span>
+        </code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td class="preformatted">
+        `Inline code` with backticks
+      </td>
+      <td class="preformatted second-example">
+        &nbsp;
+      </td>
+      <td>
+        <code class="preformatted">Inline code</code> with backticks
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>键盘快捷键 (Keyboard shortcuts)</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Keyboard shortcuts (键盘快捷键)</th>
+      <th align="left">说明</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">Ctrl + P</td>
+      <td align="left">切换预览</td>
+      <td align="left">Switch watch/unwatch</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + H</td>
+      <td align="left">插入标题(H3)</td>
+      <td align="left">Insert heading 1~6</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + A / Command + A</td>
+      <td align="left">全选</td>
+      <td align="left">Select all</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + B</td>
+      <td align="left">插入粗体</td>
+      <td align="left">Insert bold</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + E</td>
+      <td align="left">插入Emoji符号</td>
+      <td align="left">Insert :emoji:</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + F / Command + F</td>
+      <td align="left">查找/搜索</td>
+      <td align="left">Start searching</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + G / Command + G</td>
+      <td align="left">切换到下一个搜索结果项</td>
+      <td align="left">Find next search results</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + I</td>
+      <td align="left">插入斜体</td>
+      <td align="left">Insert italic</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + K</td>
+      <td align="left">插入行内代码</td>
+      <td align="left">Insert inline code</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + L</td>
+      <td align="left">插入链接</td>
+      <td align="left">Insert link</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + U</td>
+      <td align="left">插入无序列表</td>
+      <td align="left">Insert unordered list</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + Z / Command + Z</td>
+      <td align="left">撤销</td>
+      <td align="left">Undo</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + Y / Command + Y</td>
+      <td align="left">重做</td>
+      <td align="left">Redo</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + G</td>
+      <td align="left">插入图片</td>
+      <td align="left">Insert image ![]()</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + O</td>
+      <td align="left">插入有序列表</td>
+      <td align="left">Insert ordered list</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + K</td>
+      <td align="left">插入引用</td>
+      <td align="left">Insert blockquotes</td>
+    </tr>
+    <tr>
+      <td align="left">Ctrl + ?</td>
+      <td align="left">打开使用帮助对话框</td>
+      <td align="left">Open help dialog</td>
+    </tr>
+  </tbody>
+</table>

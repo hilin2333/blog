@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="unit-3-4 unit-1-on-mobile top-gap">
+        <div class="bg-white card px-7 py-5">
+        {% if date_list %}
+        <h2>归档</h2>
+        <ul>
+          {% for date in date_list %}
+          <li>
+            <a href="{% url 'blog:post_archive_day' date|date:"Y" date|date:"m" date|date:"d" %}" rel="archives">{{ date|date:"DATE_FORMAT" }}</a>
+              <ul>
+                {% for post in post_list %}
+                  <li class="mt-3"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> &nbsp;&nbsp;&nbsp;{{ post.pub_date|date:"d日 H:i:s" }}
+                  </li>
+                {% endfor %}
+              </ul>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if previous_month %}
+        <h3>上月</h3>
+        <p>
+          <a href="{% url 'blog:post_archive_month' previous_month|date:"Y" previous_month|date:"m" %}" rel="archives">{{ previous_month|date:"YEAR_MONTH_FORMAT" }}</a>
+        </p>
+        {% endif %}
+        {% if next_month %}
+        <h3>下月</h3>
+        <p>
+          <a href="{% url 'blog:post_archive_month' next_month|date:"Y" next_month|date:"m" %}" rel="archives">{{ next_month|date:"YEAR_MONTH_FORMAT" }}</a>
+        </p>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
