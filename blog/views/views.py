@@ -176,7 +176,7 @@ class CategoryListView(SetHeadlineMixin, ListView):
     template_name = 'blog/category_list.html'
     queryset = Category.objects.exclude(
         genre=Category.GENRE_CHOICES.tutorial
-    ).annotate(num_posts=Count('post'))
+    ).filter(post__status=1).annotate(num_posts=Count('post')).filter(num_posts__gt=0)
 
 
 class PostArchivesView(SetHeadlineMixin,PostArchiveMixin, ListView):
