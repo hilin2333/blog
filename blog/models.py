@@ -44,7 +44,7 @@ class Category(models.Model):
                                              default=GENRE_CHOICES.collection)
     status = models.PositiveSmallIntegerField(_('status'), choices=STATUS_CHOICES,
                                               blank=True, null=True)
-    cover = models.ImageField(_('cover'), upload_to='/static/covers/categories/%Y/%m/%d/', blank=True)
+    cover = models.ImageField(_('cover'), upload_to='media/covers/categories/%Y/%m/%d/', blank=True)
     cover_thumbnail = ImageSpecField(source='cover',
                                      processors=[ResizeToFill(500, 300)],
                                      format='JPEG',
