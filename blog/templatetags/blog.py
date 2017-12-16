@@ -61,4 +61,4 @@ def get_calendar_entries(context, year=None, month=None,
 @register.simple_tag()
 def get_tags():
 
-    return Tag.objects.all()
+    return Tag.objects.filter(post__status=1)
